@@ -10,6 +10,8 @@ class TodoList
     def add_item(*new_item)
         new_item.each do |item| 
           entry  = Item.new(item)
+          new_id = @items.length
+          entry.id = new_id
           @items << entry
         end
     end
@@ -31,6 +33,9 @@ class TodoList
         @items.each do |item|
             item.print_item
         end
+
+        puts
+        puts "Legend X:completed ?:uncompleted"
     end
     
 
@@ -51,7 +56,7 @@ class Item
     end
 
     def print_item
-       puts "#{@id}. #{@description} #{@completed_status ? "completed" : "uncompleted"}" 
+       puts "#{@id} - #{@description}  #{@completed_status ? "X" : "?"}" 
     end
 end
 
