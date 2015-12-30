@@ -10,8 +10,10 @@ list.add_item("Buy groceries","Meetup with Karan","Check on sis","Finish anthrop
 list.print_list
 
 # Delete the first item
+list.remove_item("Buy groceries")
 
 # Print the list
+list.print_list
 
 # Delete the second item
 

@@ -11,13 +11,14 @@ class TodoList
         new_item.each do |item| 
           entry  = Item.new(item)
           new_id = @items.length
-          entry.id = new_id
+          entry.id = new_id + 1
           @items << entry
         end
     end
 
     def remove_item(item_name)
         @items.delete_if{|item| item.description == item_name}
+        @items.each_with_index {|item,i| item.id = i + 1 }
     end
 
     def update_item_completed(item_name)
