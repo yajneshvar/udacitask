@@ -16,13 +16,19 @@ list.remove_item("Buy groceries")
 list.print_list
 
 # Delete the second item
+list.remove_item("Check on sis")
 
 # Print the list
+list.print_list
 
 # Update the completion status of the first item to complete
+list.update_item_completed("Meetup with Karan")
 
 # Print the list
+list.print_list
 
 # Update the title of the list
+list.change_title("New_year to do list")
 
 # Print the list
+list.print_list

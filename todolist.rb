@@ -26,6 +26,10 @@ class TodoList
         @items[index].update_status(true)
     end
 
+    def change_title(new_title)
+        @title = new_title
+    end    
+
     def print_list
         puts "---------------------"
         puts @title
