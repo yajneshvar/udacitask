@@ -32,3 +32,12 @@ list.change_title("New_year to do list")
 
 # Print the list
 list.print_list
+
+
+
+#### MY own stuff #####
+
+
+list.add_details("Meetup with Karan", "meet at 2pm near starbucks")
+
+list.print_list(verbose: true)
