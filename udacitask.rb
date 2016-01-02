@@ -41,3 +41,8 @@ list.print_list
 list.add_details("Meetup with Karan", "meet at 2pm near starbucks")
 
 list.print_list(verbose: true)
+
+list.add_priority(name: "Finish anthropology", important_urgent: true) 
+
+
+list.print_list(verbose: true, print_by: "priority")
