@@ -26,15 +26,24 @@ class TodoList
         @items[index].update_status(true)
     end
 
+
+    def find_item(item_name)
+        @items.find_index {|item| item.description == item_name}
+    end
+
     def add_details(item_name,details)
         index = find_item(item_name)
-        index = 0
         @items[index].edit_details(details)
         return 0
     end
 
-    def find_item(item_name)
-        @items.find_index {|item| item.description == item_name}
+    def add_date(date={})
+        if(date.empty?)
+            return
+        end
+        index = find_item(date[:item])
+        @items[index].edit_date(date)
+
     end
 
     def change_title(new_title)
@@ -60,12 +69,13 @@ end
 
 class Item
     attr_accessor :id
-    attr_reader :description, :completed_status, :details
+    attr_reader :description, :completed_status, :details, :date
 
     def initialize(item_description)
         @description = item_description
         @completed_status = false
         @id = 0
+        @details = "none"
     end
 
     def update_status(status)
@@ -76,13 +86,30 @@ class Item
         @details = text
     end
 
+    def edit_date(due_date={})
+        if(due_date.empty?)
+            return
+        end
+        @date = Time.new(due_date[:year],due_date[:month],due_date[:day])
+    end
+
     def print_item(opts={})
        options ={verbose: false}.merge!(opts)
-       puts "#{@id} - #{@description}  #{@completed_status ? "X" : "?"}" 
+       print "#{@id} - #{@description}  #{@completed_status ? "X" : "?"} "
+
+       if(@date.nil?)
+           print " #{options[:verbose] ? "Date: N/A \n" : "\n" }"
+       else
+           print "#{options[:verbose] ? @date.strftime(" Date: %d/%m/%y \n") : "\n" }" 
+       end
+
        if ( options[:verbose])
            print " " * 10 
            print "#{@details}\n"
        end
+
+        #sprintf("%-20s","Yaj is an idiot")
+       
     end
 
 end
