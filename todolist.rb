@@ -1,3 +1,5 @@
+require 'json'
+
 class TodoList
     # methods and stuff go here
     attr_reader :title, :items
@@ -63,41 +65,81 @@ class TodoList
     end    
 
 
+    def get_file(opts={})
+        options = {file: STDOUT}.merge!(opts)
+        return options[:file]
+    end
+
+
     def print_important_urgent(opts={})
-        puts "--Important and Urgent--"
+        file = get_file(opts)
+        file.puts "--Important and Urgent--"
+        any_item = false
         @items.each do |item|
             if(item.important_urgent?)
                 item.print_item(opts)
+                any_item = true
             end
         end
+
+        if(!any_item)
+            file.puts "None"
+        end
+
     end
 
     def print_important_xurgent(opts={})
-         puts "--Important and Not Urgent--"
+        file = get_file(opts)
+        file.puts "--Important and Not Urgent--"
+        any_item = false
         @items.each do |item|
             if(item.important_xurgent?)
                 item.print_item(opts)
+                any_item = true
             end
         end
+
+        if(!any_item)
+            file.puts "None"
+        end
+
+
     end
 
     def print_ximportant_urgent(opts={})
-        puts "--Not Important and Urgent--"
+       file = get_file(opts)
+       file.puts "--Not Important and Urgent--"
+       any_item = false
         @items.each do |item|
             if(item.ximportant_urgent?)
                 item.print_item(opts)
+                any_item = true
             end
         end 
+
+        if(!any_item)
+            file.puts "None"
+        end
+
+
     end
 
 
     def print_ximportant_xurgent(opts={})
-        puts "--Not Important and Not Urgent--"
+        file = get_file(opts)
+        file.puts "--Not Important and Not Urgent--"
+        any_item = false
         @items.each do |item|
             if(item.ximportant_xurgent?)
                 item.print_item(opts)
+                any_item = true
             end
         end
+
+        if(!any_item)
+            file.puts "None"
+        end
+
     end
 
     def print_priority(opts={})
@@ -107,28 +149,37 @@ class TodoList
         print_ximportant_xurgent(opts)
     end
 
-
+#print method for list class
+#takes in :verbose true|false :file file_object :print_by priority
     def print_list(opts={})
-        puts "---------------------"
-        puts @title
-        puts "----------------------"
+        file = get_file(opts)
+
+        file.puts "---------------------"
+        file.puts @title
+        file.puts "----------------------"
 
         #print by priority of the task
         if(opts[:print_by] == "priority")
             print_priority(opts)
+        else
+            @items.each do |item|
+                item.print_item(opts)
+            end
         end
 
+        file.puts
+        file.puts "Legend X:completed ?:uncompleted"
+    end
 
-        @items.each do |item|
-            item.print_item(opts)
-        end
 
-        puts
-        puts "Legend X:completed ?:uncompleted"
+    def save_to_file(name)
+        file = File.new(name,"w+")
+        print_list(verbose:true, file: file, print_by: "priority")
     end
     
 
 end
+
 
 class Item
     attr_accessor :id
@@ -161,8 +212,9 @@ class Item
         if(opts.empty?)
             return
         end
-        
-        @priority.merge!(opts)
+       
+        options = {ximportant_xurgent: false}.merge!(opts)
+        @priority.merge!(options)
 
     end
 
@@ -183,23 +235,25 @@ class Item
     end
 
     def print_item(opts={})
-       options ={verbose: false}.merge!(opts)
-       print "#{@id} - #{@description}  #{@completed_status ? "X" : "?"} "
+       options ={verbose: false, file: STDOUT}.merge!(opts)
+       file = options[:file]
+       file.print "#{@id} - #{@description}  #{@completed_status ? "X" : "?"} "
 
        if(@date.nil?)
-           print " #{options[:verbose] ? "Date: - \n" : "\n" }"
+           file.print " #{options[:verbose] ? "Date: - \n" : "\n" }"
        else
-           print "#{options[:verbose] ? @date.strftime(" Date: %d/%m/%y \n") : "\n" }" 
+           file.print "#{options[:verbose] ? @date.strftime(" Date: %d/%m/%y \n") : "\n" }" 
        end
 
        if ( options[:verbose])
-           print " " * 10 
-           print "#{@details}\n"
+           file.print " " * 10 
+           file.print "#{@details}\n"
        end
 
         #sprintf("%-20s","Yaj is an idiot")
        
     end
+
 
 end
 

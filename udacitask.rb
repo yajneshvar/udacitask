@@ -44,5 +44,6 @@ list.print_list(verbose: true)
 
 list.add_priority(name: "Finish anthropology", important_urgent: true) 
 
-
 list.print_list(verbose: true, print_by: "priority")
+
+list.save_to_file("new_year")
