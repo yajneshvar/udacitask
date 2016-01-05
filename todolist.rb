@@ -237,21 +237,21 @@ class Item
     def print_item(opts={})
        options ={verbose: false, file: STDOUT}.merge!(opts)
        file = options[:file]
-       file.print "#{@id} - #{@description}  #{@completed_status ? "X" : "?"} "
+
+       file.print sprintf("%-20s","#{@id} - #{@description}")
+       file.print sprintf("%5s","#{@completed_status ? "X" : "?"} ")
 
        if(@date.nil?)
-           file.print " #{options[:verbose] ? "Date: - \n" : "\n" }"
+           file.print " #{options[:verbose] ? sprintf("%10s","Date: - \n") : "\n" }"
        else
-           file.print "#{options[:verbose] ? @date.strftime(" Date: %d/%m/%y \n") : "\n" }" 
+           file.print "#{options[:verbose] ? sprintf("%10s",@date.strftime(" Date: %d/%m/%y \n")) : "\n" }" 
        end
 
        if ( options[:verbose])
            file.print " " * 10 
-           file.print "#{@details}\n"
+           file.print sprintf("%10s","#{@details}\n")
        end
 
-        #sprintf("%-20s","Yaj is an idiot")
-       
     end
 
 
