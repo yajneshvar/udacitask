@@ -28,7 +28,7 @@ class TodoList
         @items[index].update_status(true)
     end
 
-
+    #helper method to get index of an item in array based on name
     def find_item_index(item_name)
         @items.find_index {|item| item.description == item_name}
     end
@@ -48,6 +48,7 @@ class TodoList
 
     end
 
+    #add priority for an item
     def add_priority(opts={})
                 
         if(opts.empty?)
@@ -65,12 +66,13 @@ class TodoList
     end    
 
 
+    #helper method to save to a file or print out in cmd line
     def get_file(opts={})
         options = {file: STDOUT}.merge!(opts)
         return options[:file]
     end
 
-
+    #helper function to print the task list based on priority of an item
     def print_important_urgent(opts={})
         file = get_file(opts)
         file.puts "--Important and Urgent--"
@@ -142,6 +144,7 @@ class TodoList
 
     end
 
+#print the task list based on priority of an item
     def print_priority(opts={})
         print_important_urgent(opts)
         print_important_xurgent(opts)
@@ -150,7 +153,7 @@ class TodoList
     end
 
 #print method for list class
-#takes in :verbose true|false :file file_object :print_by priority
+#takes in :verbose true|false :file file_object :print_by "priority"
     def print_list(opts={})
         file = get_file(opts)
 
@@ -194,14 +197,18 @@ class Item
         @priority = {important_urgent: false, important_xurgent: false, ximportant_urgent: false, ximportant_xurgent: true}
     end
 
+    #set the status for an item true|falsem
     def update_status(status)
         @completed_status = status
     end
 
+    # add details for an item
     def edit_details(text)
         @details = text
     end
 
+    # set the due date for an item
+    #  takes in {:month :day :year}
     def edit_date(due_date={})
         if(due_date.empty?)
             return
@@ -209,6 +216,8 @@ class Item
         @date = Time.new(due_date[:year],due_date[:month],due_date[:day])
     end
 
+
+    # set the priority according to important_urgent, important_xurgent, ximportant_urgent and ximportant_xurgent
     def edit_priority(opts={})
         if(opts.empty?)
             return
@@ -219,6 +228,7 @@ class Item
 
     end
 
+    #check if an item belong to priority
     def important_urgent?
         @priority[:important_urgent]
     end
@@ -235,6 +245,10 @@ class Item
         @priority[:ximportant_xurgent]
     end
 
+
+    #print for item class
+    #verbose will print the date and details
+    #file specifies if we should print to a file instead
     def print_item(opts={})
        options ={verbose: false, file: STDOUT}.merge!(opts)
        file = options[:file]

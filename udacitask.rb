@@ -6,6 +6,8 @@ list = TodoList.new("Yaj's to do list")
 # Add four new items
 list.add_item("Buy groceries","Meetup with Karan","Check on sis","Finish anthropology")
 
+    #NEW FEATURE added to task
+
     #Add date for an item
     list.add_date(item: "Meetup with Karan", year: 2016, month: 7, day:11)
     
@@ -16,6 +18,8 @@ list.add_item("Buy groceries","Meetup with Karan","Check on sis","Finish anthrop
     list.add_priority(name: "Finish anthropology", important_urgent: true) 
 
 # Print the list
+#need to set verbose true to print out date and details
+#set print_by priority to sort list by priority
 list.print_list(verbose: true,print_by: "priority")
 
 # Delete the first item
@@ -43,5 +47,6 @@ list.change_title("New_year to do list")
 # Print the list
 list.print_list
 
+#New feature added to task
 #save to file
 list.save_to_file("new_year")
