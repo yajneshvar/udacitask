@@ -1,5 +1,5 @@
 
 
-Feature 1: Add description field for the task
-Feature 2: categorize task based on importand&urgen, important&not_urgent, not_important&urgent, not_important&not_urgent
-Feature 3: Set date for a task
+Feature 1: Add description field  and date for a  task
+Feature 2: categorize task based on importand&urgent, important&not_urgent, not_important&urgent, not_important&not_urgent
+Feature 3: Save to a filek

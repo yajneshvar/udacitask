@@ -83,7 +83,7 @@ class TodoList
         end
 
         if(!any_item)
-            file.puts "None"
+            file.puts sprintf("%6s","None")
         end
 
     end
@@ -100,7 +100,7 @@ class TodoList
         end
 
         if(!any_item)
-            file.puts "None"
+            file.puts sprintf("%6s","None")
         end
 
 
@@ -118,7 +118,7 @@ class TodoList
         end 
 
         if(!any_item)
-            file.puts "None"
+            file.puts sprintf("%6s","None")
         end
 
 
@@ -137,7 +137,7 @@ class TodoList
         end
 
         if(!any_item)
-            file.puts "None"
+            file.puts sprintf("%6s","None")
         end
 
     end
@@ -169,6 +169,7 @@ class TodoList
 
         file.puts
         file.puts "Legend X:completed ?:uncompleted"
+        file.puts
     end
 
 
@@ -238,18 +239,19 @@ class Item
        options ={verbose: false, file: STDOUT}.merge!(opts)
        file = options[:file]
 
-       file.print sprintf("%-20s","#{@id} - #{@description}")
+       file.print sprintf("%-2s"," #{(opts[:print_by] == "priority") ? "" : "#{@id} - "  } ")
+       file.print sprintf("%-40s","#{@description}")
        file.print sprintf("%5s","#{@completed_status ? "X" : "?"} ")
 
        if(@date.nil?)
-           file.print " #{options[:verbose] ? sprintf("%10s","Date: - \n") : "\n" }"
+           file.print " #{options[:verbose] ? sprintf("%12s","Date: - \n") : "\n" }"
        else
-           file.print "#{options[:verbose] ? sprintf("%10s",@date.strftime(" Date: %d/%m/%y \n")) : "\n" }" 
+           file.print "#{options[:verbose] ? sprintf("%20s",@date.strftime(" Date: %d/%m/%y \n")) : "\n" }" 
        end
 
        if ( options[:verbose])
            file.print " " * 10 
-           file.print sprintf("%10s","#{@details}\n")
+           file.print sprintf("%10s","Details: #{@details}\n")
        end
 
     end
